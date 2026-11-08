@@ -1,16 +1,21 @@
-# Agentic SDLC OS · Ficha técnica
+# Agentic SDLC OS · Technical sheet / Ficha técnica
 
-Ficha técnica pública de **Agentic SDLC OS** (Agentic SDLC Orchestration System), ecosistema agéntico privado de Jesús Ariel González Bonilla.
+Public technical sheet of **Agentic SDLC OS** (Agentic SDLC Orchestration System), the private agentic ecosystem by Jesús Ariel González Bonilla.
 
-Página: https://jesusarielgb-works.github.io/agentic-sdlc-os-ficha/
+Ficha técnica pública de **Agentic SDLC OS**, ecosistema agéntico privado de Jesús Ariel González Bonilla.
 
-## Derechos de autor
+- Español: https://jesusarielgb-works.github.io/agentic-sdlc-os-technical-sheet/
+- English: https://jesusarielgb-works.github.io/agentic-sdlc-os-technical-sheet/en/
 
-© 2026 Jesús Ariel González Bonilla. Todos los derechos reservados.
+## Copyright / Derechos de autor
+
+© 2026 Jesús Ariel González Bonilla. All rights reserved. Todos los derechos reservados.
+
+This sheet describes the ecosystem and grants no license over it. Agentic SDLC OS is a private work: its code, agents, rules and internal documentation are not published or licensed to third parties.
 
 Esta ficha describe el ecosistema y no concede ninguna licencia sobre él. Agentic SDLC OS es una obra privada: su código, sus agentes, sus reglas y su documentación interna no se publican ni se licencian a terceros.
 
-Los marcos de gobernanza citados en la ficha son obras distintas, publicadas con licencia MIT:
+The governance frameworks cited in the sheet are separate works, released under the MIT license. / Los marcos de gobernanza citados son obras distintas, publicadas con licencia MIT:
 
 - [microservices-governance-framework](https://github.com/jesusarielgb-works/microservices-governance-framework)
 - [monolith-governance-framework](https://github.com/jesusarielgb-works/monolith-governance-framework)
