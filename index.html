@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentic SDLC OS</title>
+<meta name="description" content="Ficha técnica de Agentic SDLC OS, ecosistema agéntico privado de Jesús Ariel González Bonilla, y de los marcos de gobernanza abiertos con licencia MIT de los que se nutre.">
+<style>
+/* Escala única: 14 (nota), 16 (texto), 18 (entrada), 22 (sección), 36 (título) */
+:root{
+  --fondo:#f6f6f3; --papel:#ffffff; --tono:#ecebe6; --tono-2:#e2e0d9; --tinta:#1b1f24; --suave:#575f69;
+  --acento:#4a3fb5; --acento-suave:#ebe9f7; --verde-suave:#e3f0e6; --verde:#25643a;
+  --ambar:#b7791f; --ambar-suave:#f7eedc; --cod-fondo:#1b1f24; --cod-texto:#e8eaed;
+  --arena:#f5efe3; --arena-t:#7a5a22; --lavanda:#eeecf8; --lavanda-t:#4a3fb5; --azul:#e6eef7; --azul-t:#2c5a8a; --salvia:#e5f0ea; --salvia-t:#2f6b52; --rosa:#f6e9ec; --rosa-t:#8a3a4f;
+  --t-nota:14px; --t-texto:16px; --t-entrada:18px; --t-seccion:22px; --t-titulo:36px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --fondo:#121417; --papel:#1a1d21; --tono:#22262b; --tono-2:#2b3036; --tinta:#e8eaed; --suave:#a3abb4;
+  --acento:#b3aaf0; --acento-suave:#26233d; --verde-suave:#1b2a20; --verde:#8fd0a3;
+  --ambar:#d9a14a; --ambar-suave:#2d2618; --cod-fondo:#0c0e10; --cod-texto:#e8eaed;--arena:#2a2519; --arena-t:#e0c08a; --lavanda:#24223a; --lavanda-t:#b3aaf0; --azul:#1a2532; --azul-t:#9cc3ea; --salvia:#1a2a24; --salvia-t:#93d1b4; --rosa:#2d1f24; --rosa-t:#e6a5b5;}}
+:root[data-theme="dark"]{
+  --fondo:#121417; --papel:#1a1d21; --tono:#22262b; --tono-2:#2b3036; --tinta:#e8eaed; --suave:#a3abb4;
+  --acento:#b3aaf0; --acento-suave:#26233d; --verde-suave:#1b2a20; --verde:#8fd0a3;
+  --ambar:#d9a14a; --ambar-suave:#2d2618; --cod-fondo:#0c0e10; --cod-texto:#e8eaed;--arena:#2a2519; --arena-t:#e0c08a; --lavanda:#24223a; --lavanda-t:#b3aaf0; --azul:#1a2532; --azul-t:#9cc3ea; --salvia:#1a2a24; --salvia-t:#93d1b4; --rosa:#2d1f24; --rosa-t:#e6a5b5;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--tinta);font:400 var(--t-texto)/1.6 "Segoe UI",system-ui,-apple-system,Arial,sans-serif}
+main{max-width:1080px;margin:0 auto;padding:56px 16px 72px}
+h1{font-size:var(--t-titulo);line-height:1.15;font-weight:650;margin:6px 0 10px;letter-spacing:-.01em}
+h2{font-size:var(--t-seccion);line-height:1.3;font-weight:650;margin:64px 0 12px}
+h3{font-size:var(--t-texto);font-weight:650;margin:0 0 8px}
+p{margin:0 0 12px;max-width:72ch}
+b,strong{font-weight:650}
+a{color:var(--acento)}
+.antetitulo{font-size:var(--t-nota);color:var(--suave);margin:0}
+.entrada{font-size:var(--t-entrada);color:var(--suave);max-width:64ch}
+.nota-pie{font-size:var(--t-nota);color:var(--suave);margin:14px 0 0}
+.subtitulo{margin:32px 0 10px}
+
+/* Datos de la ficha */
+.datos{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin:28px 0 0;padding:0}
+.datos div{background:var(--papel);border-radius:8px;padding:14px 16px}
+.datos dt{font-size:var(--t-nota);color:var(--suave)}
+.datos dd{margin:2px 0 0;font-weight:650}
+
+/* Bloques */
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bloque{background:var(--papel);border-radius:8px;padding:20px 22px}
+ul{margin:0;padding-left:20px}li{margin:4px 0}
+.lamina{background:var(--papel);border-radius:10px;padding:24px;margin:0}
+.caja-t{background:var(--tono);border-radius:8px;padding:14px}
+.caja-b{background:var(--papel);border-radius:6px;padding:8px 10px;font-size:var(--t-nota);line-height:1.4}
+.caja-b b{display:block}
+.sig{align-self:center;justify-self:center;color:var(--suave);font-size:var(--t-entrada);line-height:1}
+
+/* Colores sutiles por categoría */
+.c-arena{background:var(--arena) !important}.c-arena>h3,.c-arena>b{color:var(--arena-t)}
+.c-lavanda{background:var(--lavanda) !important}.c-lavanda>h3,.c-lavanda>b{color:var(--lavanda-t)}
+.c-azul{background:var(--azul) !important}.c-azul>h3,.c-azul>b{color:var(--azul-t)}
+.c-salvia{background:var(--salvia) !important}.c-salvia>h3,.c-salvia>b{color:var(--salvia-t)}
+.c-rosa{background:var(--rosa) !important}.c-rosa>h3,.c-rosa>b{color:var(--rosa-t)}
+
+/* Panorama */
+.panorama{display:grid;grid-template-columns:1fr 28px 1.3fr 28px 1fr;gap:10px;align-items:stretch}
+.panorama .caja-t{display:flex;flex-direction:column;gap:8px}
+.panorama .caja-t>p{margin:0;font-size:var(--t-nota);color:var(--suave)}
+.panorama .centro{background:var(--acento-suave)}
+.panorama .centro h3{color:var(--acento)}
+.persona{grid-column:3;background:var(--verde-suave);color:var(--verde);border-radius:8px;padding:10px 14px;font-size:var(--t-nota);font-weight:650;text-align:center}
+
+/* Cadena por fases */
+.cadena{display:grid;grid-template-columns:1fr 18px 1.25fr 18px 1.15fr 18px 1fr 18px 1fr;align-items:start;gap:10px}
+.fase{background:var(--tono);border-radius:8px;padding:14px 12px}
+.fase h3{margin-bottom:10px}
+.fase ol{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.fase li{margin:0}
+.compuerta{align-self:start;margin-top:52px;justify-self:center;width:12px;height:12px;background:var(--ambar);transform:rotate(45deg);border-radius:2px}
+.leyenda{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:18px;font-size:var(--t-nota);color:var(--suave)}
+.leyenda span{display:inline-flex;align-items:center;gap:10px}
+.leyenda .rombo{width:10px;height:10px;background:var(--ambar);transform:rotate(45deg);border-radius:2px;flex:none}
+.leyenda svg{flex:none}
+
+/* Flujo de valoración */
+.flujo{display:flex;align-items:stretch;gap:8px}
+.etapa{flex:1;background:var(--tono);border-radius:8px;padding:14px;font-size:var(--t-nota);line-height:1.4}
+.etapa b{display:block;font-size:var(--t-texto);margin-bottom:4px}
+.grupo-ia{flex:3;background:var(--acento-suave);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:8px}
+.grupo-ia>p{margin:0 4px;font-size:var(--t-nota);font-weight:650;color:var(--acento)}
+.grupo-ia .fila{display:flex;gap:8px;flex:1}
+.grupo-ia .etapa{background:var(--papel)}
+.etapa.humana{background:var(--verde-suave)}
+.etapa.humana b{color:var(--verde)}
+
+/* Cita */
+.cita{position:relative;background:var(--papel);border-radius:10px;padding:44px 56px 36px 88px;margin:0}
+.cita::before{content:"“";position:absolute;left:30px;top:18px;font:400 88px/1 Georgia,"Times New Roman",serif;color:var(--acento);opacity:.35}
+.cita p{font:italic 400 var(--t-seccion)/1.55 Georgia,"Times New Roman",serif;margin:0;max-width:60ch;letter-spacing:.005em}
+.cita footer{margin:18px 0 0;font-size:var(--t-nota);color:var(--suave);letter-spacing:.02em}
+.cita footer::before{content:"— "}
+@media (max-width:860px){.cita{padding:40px 22px 26px 22px}.cita::before{left:16px;top:6px;font-size:64px}}
+
+/* Marcos */
+.marcos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.marco{background:var(--tono);border-radius:8px;padding:16px}
+.marco p{font-size:var(--t-nota);margin:0 0 10px}
+.marco .meta{color:var(--suave)}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin:0;padding:0;list-style:none}
+.chips li{margin:0;background:var(--papel);border-radius:5px;padding:3px 8px;font-size:var(--t-nota)}
+
+/* Estructura de -docs */
+.secciones{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.secciones .caja-t p{font-size:var(--t-nota);color:var(--suave);margin:0 0 10px}
+.secciones ol{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.secciones li{margin:0;background:var(--papel);border-radius:5px;padding:5px 9px;font-size:var(--t-nota)}
+.secciones li span{color:var(--suave);font-variant-numeric:tabular-nums;margin-right:6px}
+.base{margin-top:10px;background:var(--acento-suave);border-radius:8px;padding:10px 14px;font-size:var(--t-nota)}
+
+/* Conexión */
+.conexion{display:grid;grid-template-columns:1fr 28px 1.15fr 28px 1.2fr;gap:10px;align-items:start}
+.conexion .caja-t{display:flex;flex-direction:column;gap:6px}
+.conexion .centro{background:var(--ambar-suave)}
+.arbol{display:grid;gap:6px}
+.arbol .caja-b:nth-child(2){margin-left:14px}.arbol .caja-b:nth-child(3){margin-left:28px}
+.arbol .caja-b.trans{background:var(--rosa)}
+.barras{margin-top:22px;display:grid;grid-template-columns:150px 1fr 32px;gap:6px 12px;align-items:center;font-size:var(--t-nota)}
+.barras .b{height:14px;background:var(--azul);border-radius:3px}
+.barras .b i{display:block;height:100%;background:var(--azul-t);border-radius:3px;opacity:.55}
+.barras .n{text-align:right;font-variant-numeric:tabular-nums}
+
+/* Ciclo con los equipos */
+.ciclo{display:grid;grid-template-columns:1fr 24px 1fr 24px 1fr 24px 1fr 24px 1fr;gap:8px;align-items:stretch}
+.ciclo .etapa.abierta{background:var(--acento-suave)}
+
+/* Recorrido */
+.recorrido{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.tramo{background:var(--papel);border-radius:8px;padding:18px}
+.tramo h3{margin-bottom:6px}
+.tramo p{font-size:var(--t-nota);margin:0;color:var(--suave)}
+.tramo:nth-child(1){background:var(--arena)}.tramo:nth-child(1) h3{color:var(--arena-t)}
+.tramo:nth-child(2){background:var(--salvia)}.tramo:nth-child(2) h3{color:var(--salvia-t)}
+.tramo:nth-child(3){background:var(--azul)}.tramo:nth-child(3) h3{color:var(--azul-t)}
+.tramo:nth-child(4){background:var(--lavanda)}.tramo:nth-child(4) h3{color:var(--lavanda-t)}
+.tramo p{color:var(--tinta) !important}
+.cierre{margin-top:18px;font-size:var(--t-entrada);font-weight:600}
+
+/* Tablas y código */
+table{border-collapse:collapse;width:100%;background:var(--papel);border-radius:8px;overflow:hidden}
+th,td{padding:10px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--tono)}
+thead th{background:var(--tono);font-weight:650}
+tbody tr:last-child td{border-bottom:0}
+.scroll{overflow-x:auto}
+pre{background:var(--cod-fondo);color:var(--cod-texto);border-radius:8px;padding:16px 18px;font:var(--t-nota)/1.6 Consolas,"Cascadia Mono","Courier New",monospace;overflow-x:auto;margin:12px 0;white-space:pre-wrap}
+code{font-family:Consolas,"Cascadia Mono","Courier New",monospace;font-size:var(--t-nota);background:var(--tono);border-radius:4px;padding:1px 6px}
+.aviso{background:var(--tono);border-radius:8px;padding:14px 18px;margin:12px 0;max-width:72ch}
+.aviso p:last-child,.bloque p:last-child{margin-bottom:0}
+
+body>footer,main>footer{margin-top:56px;font-size:var(--t-nota);color:var(--suave)}
+
+@media (max-width:860px){
+  :root{--t-titulo:30px;--t-seccion:20px}
+  main{padding-top:32px}
+  .dos,.marcos,.secciones,.recorrido{grid-template-columns:1fr}
+  .cadena,.panorama,.conexion,.ciclo{grid-template-columns:1fr;gap:8px}
+  .persona{grid-column:1}
+  .compuerta{margin:2px 0}
+  .flujo,.grupo-ia .fila{flex-direction:column}
+  .sig{transform:rotate(90deg)}
+  .barras{grid-template-columns:110px 1fr 28px}
+}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <p class="antetitulo">Ficha técnica · versión 1.0.0</p>
+  <h1>Agentic SDLC OS</h1>
+  <p class="entrada">Agentic SDLC Orchestration System: un ecosistema agéntico privado que coordina agentes de inteligencia artificial en cada fase del ciclo de vida del software. Sus controles son verificables y la decisión final la toma una persona.</p>
+  <dl class="datos">
+    <div><dt>Autor</dt><dd>Jesús Ariel González Bonilla</dd></div>
+    <div><dt>Versión</dt><dd>1.0.0, octubre de 2026</dd></div>
+    <div><dt>Derechos</dt><dd>Obra privada, todos los derechos reservados</dd></div>
+    <div><dt>Madurez</dt><dd>L2 parcial, con meta L4</dd></div>
+    <div><dt>Base técnica</dt><dd>Python 3.11, LangGraph 2, Anthropic SDK</dd></div>
+  </dl>
+</header>
+
+<blockquote class="cita" style="margin-top:32px">
+  <p>El conocimiento debe democratizarse. Las buenas prácticas y la gobernanza del software no pueden ser privilegio de unos pocos; por eso entrego mis marcos con licencia abierta, para que todo aprendiz, docente o equipo pueda tomarlos, mejorarlos y devolverlos a la comunidad.</p>
+  <footer>Jesús Ariel González Bonilla</footer>
+</blockquote>
+
+<h2>Qué es</h2>
+<p>Agentic SDLC OS coordina agentes de inteligencia artificial especializados a lo largo del ciclo de vida del software: descubrimiento, diseño, construcción, calidad y entrega. Cada agente tiene una responsabilidad acotada, entradas declaradas, salidas esperadas y criterios de validación.</p>
+<p>Entre una fase y la siguiente hay una compuerta de calidad. Si un agente rechaza el trabajo, este vuelve con retroalimentación. Si falla una condición de gobierno, el flujo se detiene.</p>
+<p>En el nombre, OS significa <i>Orchestration System</i>: la capa que coordina agentes, fases, artefactos, compuertas y trazabilidad. No es un sistema operativo.</p>
+<p>Es una obra personal de su autor, que la usa donde la necesite: en el desarrollo de software, en la docencia o en cualquier otro proyecto.</p>
+
+<div class="dos">
+  <div class="bloque"><h3>Qué ofrece</h3><ul>
+    <li>Un flujo gobernado, de los requisitos a la entrega.</li>
+    <li>Contratos de artefactos y reglas de traspaso entre agentes.</li>
+    <li>Condiciones de detención automáticas.</li>
+    <li>Compuertas de calidad y ciclos de rechazo.</li>
+    <li>Control del contexto que lee cada agente, para reducir costo y errores.</li>
+    <li>Ejecución reanudable y evidencia trazable.</li>
+  </ul></div>
+  <div class="bloque"><h3>Qué no es</h3><ul>
+    <li>Una colección de prompts sueltos.</li>
+    <li>Un solo agente que lo hace todo.</li>
+    <li>Un sistema que lee repositorios completos sin control de alcance.</li>
+    <li>Un reemplazo de la responsabilidad técnica de una persona.</li>
+  </ul></div>
+</div>
+
+<h2>Panorama</h2>
+<p>Tres capas: un conocimiento abierto, un ecosistema privado que lo aplica y unos resultados que siempre pasan por una persona.</p>
+<figure class="lamina">
+  <div class="panorama">
+    <div class="caja-t c-salvia"><h3>Conocimiento abierto</h3><p>Marcos de gobernanza públicos, con licencia MIT.</p>
+      <div class="caja-b"><b>Microservicios</b>Versión 1.0.1</div>
+      <div class="caja-b"><b>Monolito</b>Versión 2.1.0</div>
+      <div class="caja-b"><b>Móvil</b>Versión 1.1.0</div>
+    </div>
+    <span class="sig" aria-hidden="true">›</span>
+    <div class="caja-t c-lavanda"><h3>Agentic SDLC OS</h3><p>Ecosistema privado.</p>
+      <div class="caja-b"><b>Conocimiento curado</b>Reglas tomadas de los marcos, cada una con su origen.</div>
+      <div class="caja-b"><b>Trece pasos en cinco fases</b>Agentes con responsabilidad acotada.</div>
+      <div class="caja-b"><b>Compuertas y detenciones</b>Nada avanza sin cumplir sus condiciones.</div>
+    </div>
+    <span class="sig" aria-hidden="true">›</span>
+    <div class="caja-t c-azul"><h3>Resultados</h3><p>Lo que sale del ecosistema.</p>
+      <div class="caja-b"><b>Software</b>Construido con evidencia de cada fase.</div>
+      <div class="caja-b"><b>Valoraciones</b>Documentos firmados con huella SHA-256.</div>
+    </div>
+    <div class="persona">Una persona decide y firma cada entrega.</div>
+  </div>
+</figure>
+
+<h2>Cadena de agentes</h2>
+<p>Trece pasos, ejecutados por once agentes distintos, en el orden de aprobación del sistema. Los agentes A06 y A13 intervienen dos veces.</p>
+<figure class="lamina">
+  <div class="cadena">
+    <section class="fase c-arena" aria-label="Descubrimiento"><h3>Descubrimiento</h3><ol>
+      <li class="caja-b"><b>A05</b>Requisitos</li>
+    </ol></section>
+    <span class="compuerta" role="img" aria-label="Compuerta de calidad"></span>
+    <section class="fase c-lavanda" aria-label="Diseño"><h3>Diseño</h3><ol>
+      <li class="caja-b"><b>A06</b>Arquitectura</li>
+      <li class="caja-b"><b>A06</b>Evaluación de la arquitectura</li>
+      <li class="caja-b"><b>A03</b>Experiencia de usuario</li>
+      <li class="caja-b"><b>A10</b>Modelo de datos</li>
+      <li class="caja-b"><b>A13</b>Diseño de base de datos</li>
+      <li class="caja-b"><b>A04</b>Seguridad</li>
+    </ol></section>
+    <span class="compuerta" role="img" aria-label="Compuerta de calidad"></span>
+    <section class="fase c-azul" aria-label="Construcción"><h3>Construcción</h3><ol>
+      <li class="caja-b"><b>A13</b>Construcción de base de datos</li>
+      <li class="caja-b"><b>A07</b>Backend</li>
+      <li class="caja-b"><b>A08</b>Frontend</li>
+    </ol></section>
+    <span class="compuerta" role="img" aria-label="Compuerta de calidad"></span>
+    <section class="fase c-salvia" aria-label="Calidad"><h3>Calidad</h3><ol>
+      <li class="caja-b"><b>A09</b>Pruebas</li>
+      <li class="caja-b"><b>A12</b>Seguridad de la aplicación</li>
+    </ol></section>
+    <span class="compuerta" role="img" aria-label="Compuerta de calidad"></span>
+    <section class="fase c-rosa" aria-label="Entrega"><h3>Entrega</h3><ol>
+      <li class="caja-b"><b>A11</b>Preparación de la entrega</li>
+    </ol></section>
+  </div>
+  <div class="leyenda">
+    <span><i class="rombo"></i>Compuerta de calidad: no se pasa de fase sin aprobarla.</span>
+    <span><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M14 5H6a3.5 3.5 0 0 0 0 7h6M6 2.5 3 5l3 2.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Rechazo: cualquier agente puede devolver el trabajo o detener el flujo.</span>
+  </div>
+  <p class="nota-pie">En el sistema, las fases se llaman Discovery, Design, Build, Quality y Release.</p>
+</figure>
+
+<h2>Valoración asistida de proyectos</h2>
+<p>El mismo modelo sirve para valorar software. Los criterios de la rúbrica provienen de los roles del ecosistema. Los agentes reúnen evidencia y proponen niveles; una persona decide y firma.</p>
+<figure class="lamina">
+  <div class="flujo">
+    <div class="etapa c-arena"><b>Entrega</b>PR, Release y repositorios.</div>
+    <span class="sig" aria-hidden="true">›</span>
+    <div class="grupo-ia">
+      <p>Asistido por inteligencia artificial</p>
+      <div class="fila">
+        <div class="etapa"><b>Lectura</b>Todo el código, con archivo y línea.</div>
+        <div class="etapa"><b>Uso real</b>El sistema, probado como usuario.</div>
+        <div class="etapa"><b>Verificación</b>Se intenta refutar cada hallazgo.</div>
+      </div>
+    </div>
+    <span class="sig" aria-hidden="true">›</span>
+    <div class="etapa humana"><b>Decisión humana</b>Niveles, descuentos, nota y firma.</div>
+    <span class="sig" aria-hidden="true">›</span>
+    <div class="etapa c-azul"><b>Documento</b>PDF firmado con huella SHA-256.</div>
+  </div>
+  <p class="nota-pie">La inteligencia artificial interviene solo en las tres etapas centrales. La decisión es siempre de una persona.</p>
+</figure>
+
+<h3 class="subtitulo">Bloques de la rúbrica y roles que aportan el criterio</h3>
+<div class="scroll"><table>
+<thead><tr><th>Bloque</th><th>Qué mide</th><th>Roles del ecosistema</th></tr></thead>
+<tbody>
+<tr><td>A</td><td>Sistema en ejecución</td><td>A09 Pruebas, A11 Preparación de la entrega</td></tr>
+<tr><td>B</td><td>Código y arquitectura</td><td>A06 Arquitectura, A07 Backend, A08 Frontend, A10 Modelo de datos, A13 Base de datos</td></tr>
+<tr><td>C</td><td>Pruebas y estabilidad</td><td>A09 Pruebas</td></tr>
+<tr><td>D</td><td>Seguridad e integridad</td><td>A12 Seguridad de la aplicación, A04 Seguridad</td></tr>
+<tr><td>E</td><td>Documentación</td><td>A05 Requisitos, A06 Arquitectura, A00 Gobierno</td></tr>
+<tr><td>F</td><td>Entrega según la guía</td><td>A00 Gobierno, A11 Preparación de la entrega</td></tr>
+</tbody></table></div>
+
+<h2>Conocimiento abierto</h2>
+<p>Los marcos de gobernanza en los que se apoya este ecosistema se publicaron con licencia MIT, porque el conocimiento debe democratizarse. Reúnen buenas prácticas para documentar y gobernar un proyecto de software, de la idea a la operación, y cualquiera puede usarlos, adaptarlos y citarlos. Los repositorios <code>-docs</code> de los equipos de formación nacen de ellos y conservan la misma licencia.</p>
+
+<h3 class="subtitulo">La familia de marcos</h3>
+<figure class="lamina">
+  <div class="marcos">
+    <div class="marco c-azul"><h3>Microservicios</h3><p class="meta">Versión 1.0.1 · MIT</p><p>Dieciséis secciones, de la gobernanza al control del proyecto, y guías por tecnología.</p>
+      <ul class="chips"><li>Servicios</li><li>Contratos de API</li><li>Eventos</li><li>Guías por stack</li></ul></div>
+    <div class="marco c-arena"><h3>Monolito</h3><p class="meta">Versión 2.1.0 · MIT</p><p>Catorce secciones con la misma numeración; la sección 09 trata módulos en lugar de servicios.</p>
+      <ul class="chips"><li>Módulos</li><li>Arquitectura</li><li>Datos</li><li>Guías por stack</li></ul></div>
+    <div class="marco c-salvia"><h3>Móvil</h3><p class="meta">Versión 1.1.0 · MIT</p><p>Gobernanza propia más cinco áreas, sin depender de una tecnología concreta.</p>
+      <ul class="chips"><li>Arquitectura</li><li>Código e interfaz</li><li>API y datos</li><li>Calidad</li><li>Publicación</li></ul></div>
+  </div>
+  <p class="nota-pie">Los tres comparten una guía de desarrollo guiado por especificaciones y un archivo de cita.</p>
+</figure>
+
+<h3 class="subtitulo">Qué contiene un repositorio -docs</h3>
+<figure class="lamina">
+  <div class="secciones">
+    <div class="caja-t c-arena"><h3>Entender</h3><p>El problema antes que la solución.</p><ol>
+      <li><span>01</span>Contexto</li><li><span>02</span>Dominio</li><li><span>03</span>Producto</li><li><span>04</span>Requisitos</li></ol></div>
+    <div class="caja-t c-lavanda"><h3>Diseñar</h3><p>Cómo se construye y por qué.</p><ol>
+      <li><span>05</span>Arquitectura</li><li><span>06</span>Datos</li><li><span>07</span>API</li><li><span>08</span>UML</li><li><span>09</span>Servicios o módulos</li></ol></div>
+    <div class="caja-t c-azul"><h3>Operar</h3><p>Cómo se despliega, se prueba y se usa.</p><ol>
+      <li><span>10</span>DevOps</li><li><span>11</span>Calidad</li><li><span>12</span>UX y UI</li><li><span>13</span>Operación</li></ol></div>
+    <div class="caja-t c-salvia"><h3>Sostener</h3><p>Cómo sigue vivo el proyecto.</p><ol>
+      <li><span>14</span>Formación</li><li><span>15</span>Control del proyecto</li></ol></div>
+  </div>
+  <div class="base c-rosa"><b>Sección 00, gobernanza:</b> decisiones, convenciones y reglas que aplican a todas las demás.</div>
+  <p class="nota-pie">Estructura del marco de microservicios. El de monolito llega hasta la sección 13.</p>
+</figure>
+
+<h3 class="subtitulo">Cómo se conecta el ecosistema con los marcos</h3>
+<p>Absorción, no dependencia. El ecosistema no enlaza los marcos como una dependencia: toma de ellos solo lo esencial, y cada regla tomada cita la sección de donde viene. Los marcos siguen vivos por su cuenta.</p>
+<figure class="lamina">
+  <div class="conexion">
+    <div class="caja-t c-salvia"><h3>Marco abierto</h3>
+      <div class="caja-b"><b>Microservicios, MIT</b>Conocimiento de ingeniería en dieciséis secciones.</div>
+    </div>
+    <span class="sig" aria-hidden="true">›</span>
+    <div class="caja-t c-arena"><h3>Criterio de curación</h3>
+      <div class="caja-b">Cambia lo que un agente escribe o produce.</div>
+      <div class="caja-b">No lo verifica ya un validador.</div>
+      <div class="caja-b">Cabe en el presupuesto de contexto del agente.</div>
+    </div>
+    <span class="sig" aria-hidden="true">›</span>
+    <div class="caja-t c-lavanda"><h3>Conocimiento del ecosistema</h3>
+      <div class="arbol">
+        <div class="caja-b"><b>Principios</b>Criterio de ingeniería sin lenguaje.</div>
+        <div class="caja-b"><b>Discernimiento</b>Cuándo usar cada tecnología.</div>
+        <div class="caja-b"><b>Stack</b>Solo lo propio de cada lenguaje.</div>
+        <div class="caja-b trans"><b>Transversal</b>Producto y experiencia de usuario, siempre presentes.</div>
+      </div>
+    </div>
+  </div>
+  <h3 style="margin-top:24px">Origen de las 47 reglas absorbidas</h3>
+  <div class="barras" role="img" aria-label="Reglas absorbidas por sección de origen: UX y UI 15, Datos 11, Arquitectura 9, Guías por stack 5, Operación 3, Dominio 2, Calidad 2">
+    <span>12 · UX y UI</span><span class="b"><i style="width:100%"></i></span><span class="n">15</span>
+    <span>06 · Datos</span><span class="b"><i style="width:73%"></i></span><span class="n">11</span>
+    <span>05 · Arquitectura</span><span class="b"><i style="width:60%"></i></span><span class="n">9</span>
+    <span>Guías por stack</span><span class="b"><i style="width:33%"></i></span><span class="n">5</span>
+    <span>13 · Operación</span><span class="b"><i style="width:20%"></i></span><span class="n">3</span>
+    <span>02 · Dominio</span><span class="b"><i style="width:13%"></i></span><span class="n">2</span>
+    <span>11 · Calidad</span><span class="b"><i style="width:13%"></i></span><span class="n">2</span>
+  </div>
+  <p class="nota-pie">Conteo de las reglas que citan su origen en el marco de microservicios, a noviembre de 2026.</p>
+</figure>
+
+<h3 class="subtitulo">Del marco a la valoración</h3>
+<figure class="lamina">
+  <div class="ciclo">
+    <div class="etapa c-salvia"><b>Marco abierto</b>Plantilla pública con licencia MIT.</div>
+    <span class="sig" aria-hidden="true">›</span>
+    <div class="etapa c-arena"><b>Repositorio -docs</b>Cada equipo parte de la misma estructura.</div>
+    <span class="sig" aria-hidden="true">›</span>
+    <div class="etapa c-lavanda"><b>Documentar y construir</b>El equipo escribe sus decisiones y su sistema.</div>
+    <span class="sig" aria-hidden="true">›</span>
+    <div class="etapa c-azul"><b>Valoración</b>Se compara lo documentado con lo que corre.</div>
+    <span class="sig" aria-hidden="true">›</span>
+    <div class="etapa humana"><b>Informe firmado</b>Hallazgos con referencia exacta y huella.</div>
+  </div>
+  <p class="nota-pie">El mismo marco sirve de guía para quien documenta y de vara para quien evalúa.</p>
+</figure>
+
+<h3 class="subtitulo">Cómo citar los marcos</h3>
+<pre>González Bonilla, J. A. (2026). Microservices Governance Framework (versión 1.0.1) [Software]. Licencia MIT.
+https://github.com/jesusarielgb-works/microservices-governance-framework
+
+González Bonilla, J. A. (2026). Monolith Governance Framework (versión 2.1.0) [Software]. Licencia MIT.
+https://github.com/jesusarielgb-works/monolith-governance-framework
+
+González Bonilla, J. A. (2026). Mobile Governance Framework (versión 1.1.0) [Software]. Licencia MIT.
+https://github.com/jesusarielgb-works/mobile-governance-framework</pre>
+<p class="nota-pie">Cada repositorio incluye un archivo <code>CITATION.cff</code> con estos datos.</p>
+
+<h2>Cómo verificar un documento</h2>
+<p>Cada valoración se entrega con dos archivos de huellas. <code>HUELLAS-SHA256.txt</code> contiene la huella de cada PDF. <code>EVIDENCIA-SHA256.txt</code> contiene la huella de cada archivo de evidencia, y la firma del PDF incluye la huella de esa lista. Si cambia un solo byte, la verificación falla.</p>
+<pre>sha256sum -c HUELLAS-SHA256.txt
+sha256sum EVIDENCIA-SHA256.txt   # debe coincidir con la huella impresa en la firma</pre>
+<div class="aviso"><p>Un PDF no puede contener su propia huella, porque al escribirla el archivo cambiaría. Por eso la firma lleva la huella de la evidencia, y las huellas de los PDF van en un archivo aparte.</p></div>
+
+<h2>Cómo se llegó aquí</h2>
+<p>Este ecosistema no empezó como un producto. Creció sobre dos pilares que se alimentan entre sí: la docencia, que obliga a explicar y a evaluar con criterio, y el trabajo técnico, que obliga a entregar y a responder por lo entregado.</p>
+<div class="dos">
+  <div class="bloque"><h3>Docencia</h3><ul>
+    <li>Formación de tecnólogos en análisis y desarrollo de software, con proyectos reales por equipos.</li>
+    <li>Rúbricas en las que cada criterio dice qué se mira y cómo se comprueba.</li>
+    <li>Evaluación de punta a punta: se levanta el sistema de cada equipo y se usa, no solo se lee.</li>
+    <li>Planes de mejoramiento con evidencia, fecha y sustentación.</li>
+    <li>Guías de aprendizaje e investigación construidas sobre los formatos institucionales.</li>
+  </ul></div>
+  <div class="bloque"><h3>Trabajo técnico</h3><ul>
+    <li>Marcos de gobernanza para microservicios, monolito y móvil, publicados con licencia MIT.</li>
+    <li>Aplicaciones web desplegadas en producción, con pruebas de punta a punta antes de cada versión.</li>
+    <li>Microservicios, bases de datos relacionales y migraciones versionadas en entornos de industria.</li>
+    <li>Entregas por ambientes: desarrollo, pruebas, preproducción y producción.</li>
+    <li>Orquestación de agentes con compuertas, detenciones y trazabilidad: este ecosistema.</li>
+  </ul></div>
+</div>
+<p style="margin-top:28px">El recorrido, en cuatro tramos:</p>
+<div class="recorrido">
+  <div class="tramo"><h3>Enseñar</h3><p>Explicar una buena práctica obliga a entender por qué existe, no solo cómo se aplica.</p></div>
+  <div class="tramo"><h3>Documentar</h3><p>Lo que se repetía en cada curso terminó escrito, ordenado y abierto para cualquiera.</p></div>
+  <div class="tramo"><h3>Construir</h3><p>En la industria, los mismos principios se encontraron con plazos, producción y consecuencias reales.</p></div>
+  <div class="tramo"><h3>Orquestar</h3><p>Cuando llegaron los agentes, la pregunta dejó de ser qué pueden hacer y pasó a ser quién responde por lo que hacen.</p></div>
+</div>
+<p class="cierre">La respuesta a esa pregunta es la que da forma a todo lo demás.</p>
+
+<blockquote class="cita" style="margin-top:32px">
+  <p>Enseño lo que construyo y construyo lo que enseño. Cada día documento, gobierno y pruebo software con el mismo rigor que pido en el aula; trabajo con agentes de inteligencia artificial, pero la decisión y la firma siguen siendo mías; y lo que aprendo lo dejo abierto, para que quien venga detrás no tenga que empezar de cero.</p>
+  <footer>Jesús Ariel González Bonilla</footer>
+</blockquote>
+
+<h2>Límites declarados</h2>
+<ul>
+  <li>La inteligencia artificial asiste: reúne evidencia, propone y verifica. No califica sola.</li>
+  <li>La madurez actual es L2 parcial: el flujo está gobernado y es trazable, pero aún no tiene todos los controles de un nivel superior.</li>
+  <li>Esta ficha describe qué hace el ecosistema, no cómo está construido por dentro.</li>
+  <li>Una valoración se apoya solo en lo verificable. Lo que no se pudo comprobar queda escrito como límite en cada informe.</li>
+</ul>
+
+<h2>Derechos de autor</h2>
+<div class="dos">
+  <div class="bloque"><h3>Agentic SDLC OS: obra privada</h3>
+    <p>© 2026 Jesús Ariel González Bonilla. Todos los derechos reservados.</p>
+    <p>Su código, sus agentes, sus reglas y su documentación interna no se publican ni se licencian a terceros. Cualquier uso, copia o adaptación requiere un acuerdo escrito con el autor. Esta ficha solo describe el ecosistema y no concede ninguna licencia sobre él.</p></div>
+  <div class="bloque"><h3>Marcos de gobernanza: licencia MIT</h3>
+    <p>© 2026 Jesús Ariel González Bonilla. Publicados con licencia MIT.</p>
+    <p>Pueden usarse, copiarse, modificarse y distribuirse libremente, siempre que se conserve el aviso de autoría y de licencia. La licencia MIT de los marcos no se extiende a Agentic SDLC OS.</p></div>
+</div>
+
+<footer>© 2026 Jesús Ariel González Bonilla · Agentic SDLC OS · Ficha técnica, versión 1.0.0</footer>
+</main>
+</body>
+</html>
